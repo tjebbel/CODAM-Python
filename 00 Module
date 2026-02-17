@@ -1,0 +1,298 @@
+// Exercise 00 
+// file name: "42.py"
+
+print('42')
+
+// Exercise 01
+// file name: "hello_world.py"
+print('Hello World')
+
+// Ex 02 - Time format
+import time
+from datetime import datetime
+
+timestamp = time.time()
+
+print(
+    f"Seconds since January 1, 1970: {timestamp:,.4f} or {timestamp:.2e}"
+    "in scientific notation"
+)
+
+now = datetime.now()
+print(now.strftime("%b %d %Y"))
+
+// Ex 03 - Type
+def all_thing_is_obj(object: any) -> int:
+    if (type(object) is list):
+        print("List : ", type(object))
+    elif (type(object) is tuple):
+        print("Tuple : ", type(object))
+    elif (type(object) is set):
+        print("Set : ", type(object))
+    elif (type(object) is dict):
+        print("Dict : ", type(object))
+    elif (type(object) is str):
+        print(object, "is in the kitchen", type(object))
+    else:
+        print("Type not found")
+    return 42
+
+// ex 04 - Null
+import math
+
+def NULL_not_found(object: any) -> int:
+    if (object is None):
+        print("Nothing : None", type(object))
+    elif (type(object) is float and math.isnan(object)):
+        print("Cheese : Nan", type(object))
+    elif (type(object) is int and object == 0):
+        print("Zero : 0", type(object))
+    elif (type(object) is str and object == ""):
+        print("Empty :", type(object))
+    elif (type(object) is bool and object is False):
+        print("Fake : False", type(object))
+    else:
+        print("Type not found")
+        return 1
+    return 0
+
+// ex 05 - OddEven
+
+import sys
+
+assert len(sys.argv) <= 2, "more than one argument is provided"
+try:
+    arg = int(sys.argv[1])
+except ValueError:
+    raise AssertionError("Argument is not an integer")
+if int(sys.argv[1]) % 2 == 0:
+    print("I'm Even")
+else:
+    print("I'm Odd")
+
+// ex 06 - Building
+import sys
+
+
+def count_chars(arg: str) -> dict:
+    """
+    Counts letters, digits, spaces, and other characters in a string
+    without using str methods like isalpha(), isdigit(), or isspace().
+    Returns a dictionary with counts.
+    """
+    upper = lower = digits = spaces = punctuation = 0
+
+    for c in arg:
+        ascii_val = ord(c)
+        if 65 <= ascii_val <= 90:       # Uppercase A-Z
+            upper += 1
+        elif 97 <= ascii_val <= 122:    # Lowercase a-z
+            lower += 1
+        elif 48 <= ascii_val <= 57:     # Digits 0-9
+            digits += 1
+        elif ascii_val == 32:           # Space
+            spaces += 1
+        else:                           # Everything else is punctuation
+            punctuation += 1
+
+    return {
+        "upper letters": upper,
+        "lower letters": lower,
+        "punctuation marks": punctuation,
+        "spaces": spaces,
+        "digits": digits
+    }
+
+
+if __name__ == "__main__":
+    """
+    a single string argument and displays the sums of its upper-case
+    characters, lower-case characters, punctuation characters,
+    digits, and spaces.
+    • If none or nothing is provided, the user is prompted to provide a string.
+    • If more than one argument is provided
+        to the program, print an AssertionError.
+    """
+    if len(sys.argv) == 1:
+        arg = input("What is the text to count?\n")
+    elif len(sys.argv) == 2:
+        arg = sys.argv[1]
+    else:
+        raise AssertionError("more than one argument is provided")
+
+    counts = count_chars(arg)
+    num = len(arg)
+    print("The text contains", num, "characters:")
+    for k, v in counts.items():
+        print(f"{v} {k}")
+
+// ex 07 - Filter
+
+def ft_filter(function, iterable):
+    """
+    function is what you need to find inside iterable
+    """
+    newlist = []
+
+    if function is None:
+        newlist = [x for x in iterable if x]
+    else:
+        newlist = [x for x in iterable if function(x)]
+    return newlist
+
+import sys
+from ft_filter import ft_filter
+
+
+def is_invalid(obj: str) -> bool:
+    """
+    return true if input is bad, if not return false
+    """
+    tmp = 1
+    for c in obj:
+        ascii_val = ord(c)
+        if 65 <= ascii_val <= 90:       # Uppercase A-Z
+            tmp += 1
+        elif 97 <= ascii_val <= 122:    # Lowercase a-z
+            tmp += 1
+        elif 48 <= ascii_val <= 57:     # Digits 0-9
+            tmp += 1
+        elif ascii_val == 32:           # Space
+            tmp += 1
+        else:                           # Everything else is punctuation
+            return True
+    return False
+
+
+if __name__ == "__main__":
+    """
+    program that accepts two arguments:
+    a string (S) and an integer (N). The
+    program should output a list of words from S
+    that have a length greater than N.
+    • Words are separated from each other by space characters.
+    • Strings do not contain any special characters (punctuation or invisible).
+    • The program must contain at least one list comprehension
+    expression and one lambda.
+    • If the number of arguments is different from 2, or if
+    the type of any argument is wrong,
+    the program prints an AssertionError"""
+    if len(sys.argv) == 3:
+        line = sys.argv[1]
+    else:
+        raise AssertionError("arguments are bad")
+    try:
+        num = int(sys.argv[2])
+    except ValueError:
+        raise AssertionError("Argument is not an integer")
+
+    words = line.split()
+    res = []
+    for x in words:
+        if is_invalid(x):
+            raise AssertionError("the arguments are bad")
+        if len(x) > num:
+            res.append(x)
+    print(res)
+
+// ex08 - SOS
+
+import sys
+
+
+def is_invalid(obj: str) -> bool:
+    """
+    return true if input is bad, if not return false
+    """
+    tmp = 1
+    for c in obj:
+        ascii_val = ord(c)
+        if 65 <= ascii_val <= 90:       # Uppercase A-Z
+            tmp += 1
+        elif 97 <= ascii_val <= 122:    # Lowercase a-z
+            tmp += 1
+        elif 48 <= ascii_val <= 57:     # Digits 0-9
+            tmp += 1
+        elif ascii_val == 32:           # Space
+            tmp += 1
+        else:                           # Everything else is punctuation
+            return False
+    return True
+
+
+if __name__ == "__main__":
+    """
+    program that accepts two arguments: a string (S) and an integer (N). The
+    program should output a list of words from S that have a length
+    greater than N.
+    • Words are separated from each other by space characters.
+    • Strings do not contain any special characters (punctuation or invisible).
+    • The program must contain at least one list comprehension
+    expression and one lambda.
+    • If the number of arguments is different from 2, or if the type
+    of any argument is wrong,
+    the program prints an AssertionError"""
+    if len(sys.argv) == 2 and is_invalid(sys.argv[1]):
+        line = sys.argv[1]
+    else:
+        raise AssertionError("arguments are bad")
+
+    MORSE_CODE = {
+        'A': '.-',     'B': '-...',   'C': '-.-.',   'D': '-..',
+        'E': '.',      'F': '..-.',   'G': '--.',    'H': '....',
+        'I': '..',     'J': '.---',   'K': '-.-',    'L': '.-..',
+        'M': '--',     'N': '-.',     'O': '---',    'P': '.--.',
+        'Q': '--.-',   'R': '.-.',    'S': '...',    'T': '-',
+        'U': '..-',    'V': '...-',   'W': '.--',    'X': '-..-',
+        'Y': '-.--',   'Z': '--..',
+        'a': '.-',     'b': '-...',   'c': '-.-.',   'd': '-..',
+        'e': '.',      'f': '..-.',   'g': '--.',    'h': '....',
+        'i': '..',     'j': '.---',   'k': '-.-',    'l': '.-..',
+        'm': '--',     'n': '-.',     'o': '---',    'p': '.--.',
+        'q': '--.-',   'r': '.-.',    's': '...',    't': '-',
+        'u': '..-',    'v': '...-',   'w': '.--',    'x': '-..-',
+        'y': '-.--',   'z': '--..',
+        '0': '-----',  '1': '.----',  '2': '..---',  '3': '...--',
+        '4': '....-',  '5': '.....',  '6': '-....',  '7': '--...',
+        '8': '---..',  '9': '----.',
+        ' ': '/',
+    }
+    newlist = []
+    for x in line:
+        newlist.append(MORSE_CODE[x])
+    print(' '.join(newlist))
+
+// ex09 - Loading
+
+import os
+
+
+def ft_tqdm(lst: range) -> None:
+    """
+    Minimal tqdm-like progress generator for a range.
+    Yields items from the range while printing a progress bar.
+    """
+    total = len(lst)
+    for i, item in enumerate(lst, start=1):
+        # calculate progress
+        frac = i / total
+        bar_length = 40
+        filled = int(frac * bar_length)
+        bar = '[' + '=' * filled + '>' * (1 if filled < bar_length else 0)
+        + ' ' * (bar_length - filled - (1 if filled < bar_length else 0)) + ']'
+        percent = f"{frac * 100:6.2f}%"
+
+        # attempt to fit terminal width
+        try:
+            cols = os.get_terminal_size().columns
+            out = f"{bar} {percent} {i}/{total}"
+            if len(out) > cols:
+                out = out[:cols-3] + '...'
+        except Exception:
+            out = f"{bar} {percent} {i}/{total}"
+
+        print(out, end='\r', flush=True)
+        yield item
+
+    # final line
+    print()
