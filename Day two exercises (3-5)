@@ -1,0 +1,46 @@
+// Module 3
+// ex 00
+
+#!/usr/bin/python3
+
+number = int(input("Enter a number less than 25: "))
+
+if number > 25:
+    print('Error')
+
+while number <= 25:  
+# Increment the value of the variable "number by 1"
+    print('Inside the loop, my variable is', number)
+    number = number + 1
+
+// ex 01
+#!/usr/bin/python3
+
+input = int(input("Enter a number \n"))
+
+index = 0
+while index < 10:
+    print(f"{index} x {input} = {index*input}")
+    index = index + 1
+
+// ex 02
+#!/usr/bin/python3
+
+answer = input("What you gotta say? : ")
+
+while answer != "STOP":
+    answer = input("I got that! Anything else? : ")
+
+//ex 03
+
+#!/usr/bin/python3
+
+table = 0
+while table < 11:
+    index = 0
+    print(f"Table of {table}:", end=" ")
+    while index < 11:
+        print(table * index, end=" ")
+        index += 1
+    print()
+    table += 1
