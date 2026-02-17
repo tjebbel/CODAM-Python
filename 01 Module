@@ -1,0 +1,316 @@
+
+// module 1 exercises
+// ex 00
+// file name: name.py
+
+first_name = 'Tjebbe'
+last_name = 'Lodeizen'
+
+print(first_name, last_name)
+
+// ex 01
+// file name: name.py
+
+whole_name = first_name + last_name
+
+print(whole_name)
+
+// ex 02
+// file name: name.py
+
+first_name = input("Hey, what's your first name? : ")
+last_name = input("And your last name? : ")
+
+print("Well, pleased to meet you, " + first_name + last_name + ".")
+
+// module 2 exercises
+// ex 00 - not zero
+#!/usr/bin/python3
+
+number = int(input("Type a number: "))
+
+if number == 0:
+    print("This number is equal to zero.")
+else:
+    print('This number is different from zero.')
+
+// ex 01 - negative
+number = int(input("Type a number: "))
+
+if number < 0:
+    print("This number is negative.")
+elif number > 0:
+    print('This number is positive.')
+else:
+    print('This number is both positive and negative.')
+
+// ex 02 - multiplication
+
+#!/usr/bin/python3
+
+number1 = int(input("Enter the first number: "))
+number2 = int(input("Enter the second number: "))
+
+result = number1 * number2
+
+print(number1, 'x', number2, '=', result)
+if result > 0:
+    print('This result is positive.')
+elif result < 0:
+    print('This result is negative.')
+else:
+    print('This result is positive and negative.')
+
+// ex 03
+#!/usr/bin/python3
+
+password = input("Please type in the password: ")
+if password == 'Python is awesome':
+    print("ACCESS GRANTED")
+else:
+    print('ACCESS DENIED')
+
+// ex 04 - BMI
+
+def give_bmi(
+    height: list[int | float], weight: list[int | float]
+) -> list[int | float]:
+    """
+    takes 2 lists of integers or floats in input and returns a list
+    of BMI values
+    """
+    assert (len(height) == len(weight)), "not enought arguments in lists"
+    returnedlist = []
+    for x in range(len(height)):
+        if not isinstance(height[x], (int, float)):
+            raise AssertionError("Height is not correct")
+        if not isinstance(weight[x], (int, float)):
+            raise AssertionError("Weight is not correct")
+        returnedlist.append(float(weight[x] / (height[x] * height[x])))
+    return returnedlist
+
+
+def apply_limit(bmi: list[int | float], limit: int) -> list[bool]:
+    """
+    accepts a list of integers or floats and an integer representing
+    a limit as parameters. It returns a list of booleans
+    (True if above the limit)
+    """
+    try:
+        arg = int(limit)
+    except ValueError:
+        raise AssertionError("Argument is not an integer")
+    returnlist = []
+
+    for x in bmi:
+        if not isinstance(x, (int, float)):
+            raise AssertionError("Argument is not correct")
+        if arg > x:
+            returnlist.append(False)
+        else:
+            returnlist.append(True)
+    return returnlist
+
+\\ tester
+
+from give_bmi import give_bmi, apply_limit
+
+height = [2.71, 1.15]
+weight = [165.3, 38.4]
+
+bmi = give_bmi(height, weight)
+print(bmi, type(bmi))
+print(apply_limit(bmi, 26))
+
+\\ ex 05 - Array
+def slice_me(family: list, start: int, end: int) -> list:
+    """
+    takes as parameters a 2D array, prints its shape, and returns a
+    truncated version of the array based on the provided start and
+    end arguments.
+    You must use the slicing method.
+    """
+    if not isinstance(start, int):
+        raise AssertionError("Start is not an integer")
+    if not isinstance(start, int):
+        raise AssertionError("End is not an integer")
+    num = len(family[0])
+    for x in family:
+        if len(x) != num:
+            raise AssertionError("List is incorrect")
+    print(f"My shape is : ({len(family)}, {num})")
+    returnedlist = family[start:end]
+    print(f"My new shape is : ({len(returnedlist)}, {num})")
+    return returnedlist
+
+from array2D import slice_me
+
+family = [[1.80, 78.4],
+          [2.15, 102.7],
+          [2.10, 98.5],
+          [1.88, 75.2]]
+print(slice_me(family, 0, 2))
+print(slice_me(family, 1, -2))
+
+\\ ex 06 - Image loading
+
+import cv2
+import numpy as np
+
+
+def ft_load(path: str) -> np.array:
+    """
+    You need to write a function that loads an image, prints its format,
+    and its pixels content in RGB format.
+    You have to handle, at least, JPG and JPEG format.
+    You need to handle any error with a clear error message
+    """
+    image = cv2.imread(path)
+    if image is None:
+        raise AssertionError("Wrong image path")
+    data = np.array(image)
+    cv2.imshow("ex02", image)
+    print(f"The shape of image is: {data.shape}")
+    print(data)
+    return data
+
+from load_image import ft_load
+print(ft_load("landscape.jpg"))
+
+import cv2
+import numpy as np
+
+
+def ft_load(path: str) -> np.array:
+    """
+    You need to write a function that loads an image, prints its format,
+    and its pixels content in RGB format.
+    You have to handle, at least, JPG and JPEG format.
+    You need to handle any error with a clear error message
+    """
+    image = cv2.imread(path)
+    if image is None:
+        raise AssertionError("Wrong image path")
+    data = np.array(image)
+    print(f"The shape of image is: {data.shape}")
+    print(data)
+    return data
+
+import cv2
+import numpy as np
+from load_image import ft_load
+
+
+def ft_transpose3d(image: list) -> list:
+    """
+    Transpose a 3D list (swap height and width axes).
+    """
+    h, w, c = len(image), len(image[0]), len(image[0][0])
+    return [[[image[y][x][ch] for ch in range(c)] for y in range(h)]
+            for x in range(w)]
+
+
+def main():
+    """
+    Make a program which must load the image "animal.jpeg",
+    cut a square part from it
+    and transpose it to produce the image below.
+    It should display it, print the new shape
+    and the data of the image after the transpose.
+    """
+    print(ft_load("animal.jpeg"))
+    image = cv2.imread("animal.jpeg")
+    if image is None:
+        raise AssertionError("Wrong image path")
+    image = image[:400, :400, :]
+    data = np.array(ft_transpose3d(image))
+    print(f"New shape after Transpose: {data.shape}")
+    print(data)
+    cv2.imshow("ex04", data)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+
+
+if __name__ == "__main__":
+    main()
+
+\\ ex 07 - Pimp image
+
+import cv2
+import numpy as np
+
+
+def ft_invert(array) -> np.array:
+    """
+    inverts like a photo negative
+    """
+    data = np.array(array)
+    data = 255 - data
+    cv2.imshow("invert", data)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+    return data
+
+
+def ft_red(array) -> np.array:
+    """Keep only the red channel."""
+    red = np.array(array)
+    red[:, :, 1] = 0  # remove green
+    red[:, :, 0] = 0  # remove blue
+    cv2.imshow("red", red)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+    return red
+
+
+def ft_green(array) -> np.array:
+    """Keep only the green channel."""
+    green = np.array(array)
+    green[:, :, 0] = 0  # remove blue
+    green[:, :, 2] = 0  # remove red
+    cv2.imshow("gren", green)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+    return green
+
+
+def ft_blue(array) -> np.array:
+    """Keep only the blue channel."""
+    blue = np.array(array)
+    blue[:, :, 1] = 0  # remove green
+    blue[:, :, 2] = 0  # remove red
+    cv2.imshow("blue", blue)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+    return blue
+
+
+def ft_grey(array) -> np.array:
+    """Convert to grayscale (average of RGB channels)."""
+    grey = (
+        0.2989 * array[:, :, 2] +  # Red channel
+        0.5870 * array[:, :, 1] +  # Green channel
+        0.1140 * array[:, :, 0]    # Blue channel
+    )
+    grey = grey.astype(np.uint8)
+    cv2.imshow("grey", grey)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+    return np.stack((grey, grey, grey), axis=2)
+
+from load_image import ft_load
+from pimp_image import ft_invert
+from pimp_image import ft_red
+from pimp_image import ft_green
+from pimp_image import ft_blue
+from pimp_image import ft_grey
+
+
+array = ft_load("landscape.jpg")
+ft_invert(array)
+ft_red(array)
+ft_green(array)
+ft_blue(array)
+ft_grey(array)
+print(ft_invert.__doc__)
+
